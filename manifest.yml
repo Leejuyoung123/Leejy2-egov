@@ -1,0 +1,10 @@
+---
+applications:
+- name: Leejy2-egov
+  memory: 1024M
+  disk_quota: 1024M
+  instances: 1
+  host: leejy2-egov
+  domain: paas-ta.org
+  services:
+  - Leejy-egov-db
