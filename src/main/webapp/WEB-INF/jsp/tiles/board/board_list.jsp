@@ -17,7 +17,7 @@
     }
 
     function fn_egov_addNotice() {
-        document.frm.action = "/sht_webapp/cop/bbs/addBoardArticle.do";
+        document.frm.action = "/cop/bbs/addBoardArticle.do";
         document.frm.submit();
     }
     
@@ -30,7 +30,7 @@
     function fn_egov_inqire_notice(nttId, bbsId) {
         document.subForm.nttId.value = nttId;
         document.subForm.bbsId.value = bbsId;
-        document.subForm.action = "/sht_webapp/cop/bbs/selectBoardArticle.do";
+        document.subForm.action = "/cop/bbs/selectBoardArticle.do";
         document.subForm.submit();          
     }
 //-->
@@ -129,7 +129,7 @@
 	            </ul>
 	        </div>
 			<p class="btn_line">
-				<a href="<c:url value='/admin/board/addBoard.do'/>?bbsId=<c:out value="${boardVO.bbsId}"/>" class="btn_baseColor">등록</a>
+				<a href="<c:url value='/tiles/board/insertBoardForm.do'/>?bbsId=<c:out value="${boardVO.bbsId}"/>" class="btn_baseColor">등록</a>
 			</p>
 		</div>
 		<!-- //bodytext_area -->

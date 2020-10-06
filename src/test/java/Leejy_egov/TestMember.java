@@ -1,4 +1,4 @@
-package kimilguk_egov;
+package Leejy_egov;
 
 import java.sql.Connection;
 import java.sql.SQLException;

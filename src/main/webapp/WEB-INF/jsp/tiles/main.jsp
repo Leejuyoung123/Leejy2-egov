@@ -8,7 +8,7 @@
     	<div class="main_rolling_pc">
             <div class="visualRoll">
                 <ul class="viewImgList">
-                    <li class="imglist0 sytle="background":url("/home/img/mainslide_mo3.jpg");>
+                    <li class="imglist0">
                         <div class="roll_content">
                         </div>
                     </li>

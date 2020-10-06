@@ -194,7 +194,7 @@
 										</div>
 								    </c:if>
 									<div class="buttons">
-										<button type="button" onclick="javascript:fn_egov_moveUpdt_notice(); return false;" class="btn btn-warning">수정</button>
+										<button type="button" onclick="javascript:fn_egov_moveUpdt_notice(); return false;" class="btn btn-warning">수정</button>	
 										<button type="button" onclick="javascript:fn_egov_delete_notice(); return false;" class="btn btn-danger">삭제</button>
 										<button type="button" onclick="javascript:fn_egov_select_noticeList('1'); return false;" class="btn btn-primary">목록</button>
 										<button type="button" onclick="javascript:fn_egov_addReply(); return false;" class="btn btn-info">답변</button>
