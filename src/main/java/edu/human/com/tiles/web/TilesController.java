@@ -1,5 +1,9 @@
 package edu.human.com.tiles.web;
 
+import java.io.BufferedInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
 import java.util.List;
 import java.util.Map;
 
@@ -14,6 +18,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -64,6 +69,9 @@ public class TilesController {
 	@Resource(name = "EgovFileMngUtil")
     private EgovFileMngUtil fileUtil;
 	
+	@Resource(name = "EgovFileMngService")
+    private EgovFileMngService fileService;
+	
 	/**
      * XSS 방지 처리.
      *
@@ -94,18 +102,97 @@ public class TilesController {
 
         return ret;
     }
-    
-    
+	
+    /*
+     * 타일즈를 이용한 최근 겔러리 게시판 미리보기 이미지 출력
+     */
+    @SuppressWarnings("resource")
+	@RequestMapping(value="/tiles/board/previewImage.do")
+    public void previewImage(HttpServletResponse response, @RequestParam("atchFileId") String atchFileId) throws Exception {
+
+    	FileVO vo = new FileVO();
+
+		vo.setAtchFileId(atchFileId);
+		FileVO fvo = null; // fvo 클래스 변수 초기화
+		for(int cnt=0; cnt<5; cnt++) {
+			vo.setFileSn(Integer.toString(cnt));
+			fvo = fileService.selectFileInf(vo);
+			if (fvo !=null ) {
+				break; // for 반복문 빠져나가기
+			}
+		}
+		//String fileLoaction = fvo.getFileStreCours() + fvo.getStreFileNm();
+
+		File file = new File(fvo.getFileStreCours(), fvo.getStreFileNm());
+		FileInputStream fis = null; 
+		new FileInputStream(file);
+
+		BufferedInputStream in = null;
+		ByteArrayOutputStream bStream = null;
+		try{
+			fis = new FileInputStream(file);
+			in = new BufferedInputStream(fis);
+			bStream = new ByteArrayOutputStream();
+			int imgByte;
+			while ((imgByte = in.read()) != -1) {
+			    bStream.write(imgByte);
+			}
+
+			String type = "";
+
+			if (fvo.getFileExtsn() != null && !"".equals(fvo.getFileExtsn())) {
+			    if ("jpg".equals(fvo.getFileExtsn().toLowerCase())) {
+				type = "image/jpeg";
+			    } else {
+				type = "image/" + fvo.getFileExtsn().toLowerCase();
+			    }
+			    type = "image/" + fvo.getFileExtsn().toLowerCase();
+
+			} else {
+			}
+
+			response.setHeader("Content-Type", type);
+			response.setContentLength(bStream.size());
+
+			bStream.writeTo(response.getOutputStream());
+
+			response.getOutputStream().flush();
+			response.getOutputStream().close();
+
+
+		}catch(Exception e){
+		}finally{
+			if (bStream != null) {
+				try {
+					bStream.close();
+				} catch (Exception est) {
+				}
+			}
+			if (in != null) {
+				try {
+					in.close();
+				} catch (Exception ei) {
+				}
+			}
+			if (fis != null) {
+				try {
+					fis.close();
+				} catch (Exception efis) {
+				}
+			}
+		}
+    	
+    }
     
     /*
-     * 타일즈를 이용한 게시판 등록 폼으로 이동
-     */
+	 * 타일즈를 이용한 게시판 등록 폼으로 이동
+	 */
     @RequestMapping(value="/tiles/board/insertBoardForm.do")
-    public String insertBoardForm(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) throws Exception{
+    public String insertBoardForm(@ModelAttribute("searchVO") BoardVO boardVO, ModelMap model) throws Exception {
     	// 사용자권한 처리
     	if(!EgovUserDetailsHelper.isAuthenticated()) {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
-        	return "login.tiles"; 
+        	return "login.tiles";
     	}
 
         LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
@@ -132,7 +219,6 @@ public class TilesController {
 
     	model.addAttribute("brdMstrVO", bdMstr);
     	////-----------------------------
-    	
     	return "board/board_write.tiles";
     }
     /*
@@ -141,7 +227,7 @@ public class TilesController {
     @RequestMapping(value="/tiles/board/insertBoard.do")
     public String insertBoard(final MultipartHttpServletRequest multiRequest, @ModelAttribute("searchVO") BoardVO boardVO,
     	    @ModelAttribute("bdMstr") BoardMaster bdMstr, @ModelAttribute("board") Board board, BindingResult bindingResult, SessionStatus status,
-    	    ModelMap model) throws Exception{
+    	    ModelMap model) throws Exception {
     	// 사용자권한 처리
     	if(!EgovUserDetailsHelper.isAuthenticated()) {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
@@ -196,36 +282,31 @@ public class TilesController {
 
     	    bbsMngService.insertBoardArticle(board);
     	}
-
-    	//status.setComplete();
-    	
     	return "forward:/tiles/board/list.do";
     }
-    
 	/*
-	 * 타일즈를 이용한 게시판 삭제하기
+	 * 타일즈를 이용한 게시판 삭제 구현
 	 */
     @RequestMapping(value="/tiles/board/deleteBoard.do")
-    public String delteBoard(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") Board board,
-    	    @ModelAttribute("bdMstr") BoardMaster bdMstr, ModelMap model) throws Exception{
+    public String deleteBoard(@ModelAttribute("searchVO") BoardVO boardVO, @ModelAttribute("board") Board board,
+    	    @ModelAttribute("bdMstr") BoardMaster bdMstr, ModelMap model) throws Exception {
     	// 사용자권한 처리
     	if(!EgovUserDetailsHelper.isAuthenticated()) {
     		model.addAttribute("message", egovMessageSource.getMessage("fail.common.login"));
         	return "login.tiles";
     	}
 
-	LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
-	Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
-
-	if (isAuthenticated) {
-	    board.setLastUpdusrId(user.getUniqId());
-
-	    bbsMngService.deleteBoardArticle(board);
-	}
-
-	return "forward:/tiles/board/list.do";
+		LoginVO user = (LoginVO)EgovUserDetailsHelper.getAuthenticatedUser();
+		Boolean isAuthenticated = EgovUserDetailsHelper.isAuthenticated();
+	
+		if (isAuthenticated) {
+		    board.setLastUpdusrId(user.getUniqId());
+	
+		    bbsMngService.deleteBoardArticle(board);
+		}
+    	return "forward:/tiles/board/list.do";
     }
-	/*
+    /*
 	 * 타일즈를 이용한 게시판 수정하기 폼 이동
 	 */
 	@RequestMapping(value="/tiles/board/updateBoardForm.do")

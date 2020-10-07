@@ -27,16 +27,18 @@
 		.rollbtnArea{
 		bottom:60px;}
 		</style>
-         <div class="rollbtnArea">
-             <ul class="rollingbtn">
-                 <li class="seq butt0"><a href="#butt"><img src="<c:url value='/'/>home/img/btn_rollbutt_on.png" alt="1번" /></a></li>
-                 <li class="seq butt1"><a href="#butt"><img src="<c:url value='/'/>home/img/btn_rollbutt_off.png" alt="2번" /></a></li>
-                 <li class="seq butt2"><a href="#butt"><img src="<c:url value='/'/>home/img/btn_rollbutt_off.png" alt="3번" /></a></li>
-                 <li class="rollstop"><href="#" onclick="return false" class="stop"><img src="<c:url value='/'/>home/img/btn_roll_stop.png" alt="멈춤" /></a></li>
-                 <li class="rollplay"><href="#" onclick="return false" class="play"><img src="<c:url value='/'/>home/img/btn_roll_play.png" alt="재생" /></a></li>
-             </ul>
-         </div><!-- //rollbtnArea -->
+        <div class="rollbtnArea">
+                    <ul class="rollingbtn">
+                        <li class="seq butt0"><a href="#butt"><img src="<c:url value='/'/>home/img/btn_rollbutt_on.png" alt="1번" /></a></li>
+                        <li class="seq butt1"><a href="#butt"><img src="<c:url value='/'/>home/img/btn_rollbutt_off.png" alt="2번" /></a></li>
+                        <li class="seq butt2"><a href="#butt"><img src="<c:url value='/'/>home/img/btn_rollbutt_off.png" alt="3번" /></a></li>
+                        <li class="rollstop"><a href="#" class="stop"><img src="<c:url value='/'/>home/img/btn_roll_stop.png" alt="멈춤" /></a></li>
+                        <li class="rollplay"><a href="#" class="play"><img src="<c:url value='/'/>home/img/btn_roll_play.png" alt="재생" /></a></li>
+                    </ul>
+                </div><!-- //rollbtnArea -->
 
+            </div><!-- //visualRoll -->
+        </div><!-- //main_rolling_pc -->
         
         <div class="main_rolling_mobile">
             <div class="swiper-container">
@@ -60,27 +62,25 @@
 	
 		<!-- about_area -->
 		<div class="about_area">
-			<h2>OOOO OOOOO 스프링 <b>TOP 3</b></h2>
+			<h2><a href="<c:url value='/tiles/board/list.do?bbsId=BBSMSTR_BBBBBBBBBBBB'/>">최신 사진 갤러리 <b>TOP 3</b></a></h2>
 			<div class="about_box">
 				<ul class="place_list box_inner clear">
-					<li><href="#" onclick="return false" onclick="$('.popup_base').css('height',$(document).height());$('.contact_pop').show();">
-							<img class="img_topplace" src="<c:url value='/'/>home/img/img_topplace01.jpg" alt="OOOO OOOOO" />
-							<h3>OOOO OOOOO</h3>
-							<p class="txt">OOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOO!</p>
-							<span class="view">VIEW</span></a>
+				<c:forEach var="result" items="${galList}" varStatus="status">
+				<c:if test="${status.count <= 3}">
+					<li><a href="<c:url value='/tiles/board/view.do?bbsId=BBSMSTR_BBBBBBBBBBBB&nttId=${result.nttId}'/>">
+							<c:if test="${empty result.atchFileId}">
+							<img class="img_topplace" src="<c:url value='/'/>home/img/img_topplace01.jpg" alt="빈 이미지 입니다." />
+							</c:if>
+							<c:if test="${not empty result.atchFileId}">
+							<img src="<c:url value='/tiles/board/previewImage.do'/>?atchFileId=${result.atchFileId}" alt="첨부이미지 입니다." style="width:100%;" />
+			                </c:if>
+							<h3>${result.nttSj}</h3>
+							<p class="txt">${result.nttCn}</p>
+							<span class="view">VIEW</span>
+						</a>
 					</li>
-					<li><href="#" onclick="return false" onclick="$('.popup_base').css('height',$(document).height());$('.space_pop').show();">
-							<img class="img_topplace" src="<c:url value='/'/>home/img/img_topplace02.jpg" alt="OOOO OOOOO" />
-							<h3>OOOO OOOOO</h3>
-							<p class="txt">OOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOO.</p>
-							<span class="view">VIEW</span></a>
-					</li>
-					<li><href="#" onclick="return false" onclick="$('.popup_base').css('height',$(document).height());$('.program_pop').show();">
-							<img class="img_topplace" src="<c:url value='/'/>home/img/img_topplace03.jpg" alt="OOOO OOOOO" />
-							<h3>OOOO OOOOO</h3>
-							<p class="txt">OOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOOOOOO OOOOO</p>
-							<span class="view">VIEW</span></a>
-					</li>
+				</c:if>
+				</c:forEach>
 				</ul>
 			</div>
 		</div>
@@ -95,13 +95,11 @@
 					<a href="javascript:;">전화 상담 신청</a>
 				</p>
 				<div class="bbs_line">
-					<h3>NOTICE</h3>
+					<h3><a href="<c:url value='/tiles/board/list.do?bbsId=BBSMSTR_AAAAAAAAAAAA'/>">NOTICE</a></h3>
 					<ul class="notice_recent">
-						<li><a href="javascript:;">OOOO OOOOO (스프링OOOO OOOOO)</a></li>
-						<li><a href="javascript:;">OOOO OOOOOOOOO OOOOO</a></li>
-						<li><a href="javascript:;">OOOO OOOOO/OOOO OOOOO</a></li>
-						<li><a href="javascript:;">OOOO OOOOO OPEN! (스프링정보, OOOO OOOOO)</a></li>
-						<li><a href="javascript:;">OOOO OOOOO 서비스 점검 안내</a></li>
+					<c:forEach var="result" items="${notiList}" varStatus="status">
+						<li><a href="<c:url value='/tiles/board/view.do?bbsId=BBSMSTR_AAAAAAAAAAAA&nttId=${result.nttId}'/>">${result.nttSj}</a></li>
+					</c:forEach>
 					</ul>
 				</div>
 			</div>
@@ -109,4 +107,4 @@
 		<!-- //app_area -->
 		
 	</div>
-	<!-- //container -->	
+	<!-- //container -->

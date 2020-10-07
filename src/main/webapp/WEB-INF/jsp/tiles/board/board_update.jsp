@@ -13,13 +13,11 @@
 <script type="text/javascript" src="<c:url value="/validator.do"/>"></script>
 <validator:javascript formName="board" staticJavascript="false" xhtml="true" cdata="false"/>
 <script>
-// 목록
 function fn_egov_select_noticeList(pageNo) {
     document.board.pageIndex.value = pageNo; 
     document.board.action = "<c:url value='/tiles/board/list.do'/>";
     document.board.submit();  
 }
-// 등록
 function fn_egov_regist_notice(){
     //document.board.onsubmit();
     if (!validateBoard(document.board)){
@@ -30,22 +28,6 @@ function fn_egov_regist_notice(){
         document.board.submit();                    
     }
 }
-// 삭제
-function fn_egov_delete_notice() {
-        if ("<c:out value='${anonymous}'/>" == "true" && document.frm.password.value == '') {
-            alert('등록시 사용한 패스워드를 입력해 주세요.');
-            document.frm.password.focus();
-            return;
-        }
-        
-        if (confirm('<spring:message code="common.delete.msg" />')) {
-            document.board.action = "<c:url value='/tiles/board/deleteBoard.do'/>";
-            document.board.submit();
-        }   
-    }
-
-
-//파일체크 
 function fn_egov_check_file(flag) {
     if (flag=="Y") {
         document.getElementById('file_upload_posbl').style.display = "block";
@@ -54,7 +36,13 @@ function fn_egov_check_file(flag) {
         document.getElementById('file_upload_posbl').style.display = "none";
         document.getElementById('file_upload_imposbl').style.display = "block";
     }
-}   
+} 
+function fn_egov_delete_notice() {
+    if (confirm('<spring:message code="common.delete.msg" />')) {
+        document.board.action = "<c:url value='/tiles/board/deleteBoard.do'/>";
+        document.board.submit();
+    }   
+}
 </script>
 
 <!-- container -->
@@ -76,7 +64,7 @@ function fn_egov_check_file(flag) {
 			<!-- appForm -->
 			<form:form class="appForm" commandName="board" name="board" method="post" enctype="multipart/form-data" >
 				<input type="hidden" name="pageIndex" value="<c:out value='${searchVO.pageIndex}'/>"/>
-					<input type="hidden" name="returnUrl" value="<c:url value='/cop/bbs/forUpdateBoardArticle.do'/>"/>
+					<input type="hidden" name="returnUrl" value="<c:url value='/tiles/board/updateBoardForm.do'/>"/>
 					<input type="hidden" name="bbsId" value="<c:out value='${result.bbsId}'/>" />
 					<input type="hidden" name="nttId" value="<c:out value='${result.nttId}'/>" />
 					<input type="hidden" name="bbsAttrbCode" value="<c:out value='${bdMstr.bbsAttrbCode}'/>" />
@@ -148,7 +136,7 @@ function fn_egov_check_file(flag) {
 					<p class="btn_line">
 					<a href="javascript:fn_egov_regist_notice();void(0);" class="btn_baseColor">등록</a>
 					<a href="javascript:fn_egov_select_noticeList(1);void(0);" class="btn_baseColor">목록</a>
-					<a href="javascript:fn_egov_delete_notice(1);void(0);" class="btn_baseColor">삭제</a>
+					<a href="javascript:fn_egov_delete_notice();void(0);" class="btn_baseColor">삭제</a>
 					</p>	
 				</fieldset>
 			</form:form>

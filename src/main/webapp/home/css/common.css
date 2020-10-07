@@ -130,7 +130,7 @@ hr {display:none;}
 header {position:relative; left:0; top:0; width:100%; height:113px; background:linear-gradient(-45deg, #000000a8, transparent);  width:100;height:100; z-index:100;}
 header .header_area {/*position:relative;*/}
 header .header_area h1 {float:left; padding:25px 0 0;}
-header .header_area h1 a {display:block; width:270px; height:71px; text-indent:-9999px; overflow:hidden; background:url(../img/main_logo.png) no-repeat;}
+header .header_area h1 a {display:block; width:270px; height:71px; text-indent:-9999px; overflow:hidden; background:url(../img/mlogo.png) no-repeat;}
 header .header_area .openMOgnb {display:none;}
 .header_cont {float:right; width:780px;padding-right:10px;}
 .header_cont .util {text-align: right; padding-top:10px;}
@@ -206,7 +206,7 @@ footer .foot_area .snslink li + li + li a {background-image:url(../img/ico_insta
 .about_area .place_list li .view {display:inline-block; margin-top:20px; padding-top:5px; border-top:2px solid #333; color:#666;}
 
 /* app_area */
-.appbbs_area {padding:60px 0;}
+.appbbs_area {padding:60px 0; background:antiquewhite;}
 .appbbs_area .appbbs_box {}
 .appbbs_box .app_line {float:left; width:66%; box-sizing:border-box; padding:45px 0; text-align:center; background:linear-gradient(45deg, black, transparent); font-size:0;}
 .appbbs_box .app_line a {display:inline-block; width:42.4%; height:100px; line-height:100px; box-sizing:border-box; padding-left:75px; text-align:left; background:rgba(0,0,0,0.3) url(../img/ico_katalk.png) no-repeat 20px 50%; border:2px solid #fff; margin-right:10px; font-size:26px; color:#fff; vertical-align:middle;}
@@ -454,7 +454,7 @@ h1.loginTit a img {width:100%;}
     .about_area .place_list li .view {padding-bottom: 10px; margin:0 0 30px;}
 
 	/* app_area */ 
-	.appbbs_area {padding:0 20px;}
+	.appbbs_area {padding:0 20px; background:}
 	.appbbs_box .app_line {display:none;}
 	.appbbs_box .bbs_line {float:none; width:100%; padding:20px 0; border-top:1px solid #d6d7d8;}
 	.appbbs_box .bbs_line h3 {font-weight:bold; font-size:19px;}    

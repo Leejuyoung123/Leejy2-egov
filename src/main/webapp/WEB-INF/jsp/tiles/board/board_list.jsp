@@ -17,7 +17,7 @@
     }
 
     function fn_egov_addNotice() {
-        document.frm.action = "/cop/bbs/addBoardArticle.do";
+        document.frm.action = "/sht_webapp/cop/bbs/addBoardArticle.do";
         document.frm.submit();
     }
     
@@ -30,7 +30,7 @@
     function fn_egov_inqire_notice(nttId, bbsId) {
         document.subForm.nttId.value = nttId;
         document.subForm.bbsId.value = bbsId;
-        document.subForm.action = "/cop/bbs/selectBoardArticle.do";
+        document.subForm.action = "/sht_webapp/cop/bbs/selectBoardArticle.do";
         document.subForm.submit();          
     }
 //-->
